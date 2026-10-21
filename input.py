@@ -2,14 +2,15 @@ from __future__ import annotations
 import argparse
 
 
-def parse_cmd_line() -> tuple(str, bool):
+def parse_cmd_line() -> tuple[str, bool, bool, str]:
     """
     Parses command line from standard input.
 
     Returns
     -------
-    tuple(str, bool)
-        path to input graph file, whether to plot the graph.
+    tuple[str, bool, bool, str]
+        path to input graph file, whether to plot the graph, whether the walk must be closed,
+        T-join backend.
     """
     parser = argparse.ArgumentParser("Padam R&D Test")
     parser.add_argument("-i", "--in_file", help="path to graph txt file", dest="in_file", required=True)
@@ -22,8 +23,22 @@ def parse_cmd_line() -> tuple(str, bool):
         default=False,
         required=False,
     )
+    parser.add_argument(
+        "--open",
+        help="allow the walk to end at a different vertex than it starts",
+        action="store_false",
+        dest="closed",
+        default=True,
+    )
+    parser.add_argument(
+        "-m",
+        "--method",
+        help="T-join backend: dense (networkx blossom on metric closure), sparse (PyMatching), auto",
+        choices=["auto", "dense", "sparse"],
+        default="auto",
+    )
     args = parser.parse_args()
-    return args.in_file, args.plot_graph
+    return args.in_file, args.plot_graph, args.closed, args.method
 
 
 def parse_file(file_name: str) -> tuple[list[tuple], list[tuple]]:

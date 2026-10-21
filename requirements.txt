@@ -1,1 +1,4 @@
 matplotlib
+networkx>=3.0
+pymatching>=2.0
+pytest

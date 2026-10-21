@@ -31,7 +31,7 @@ class Graph:
         Plot the graph.
         """
         weights = list(set(edge[2] for edge in self.edges))
-        colors = plt.cm.get_cmap("viridis", len(weights))
+        colors = plt.get_cmap("viridis", len(weights))
         _, ax = plt.subplots()
         for i, weight in enumerate(weights):
             lines = [
@@ -55,7 +55,7 @@ class Graph:
 
     @staticmethod
     def display_paths(*, paths: list[list[Edge]]):
-        colors = plt.cm.get_cmap("viridis", len(paths))
+        colors = plt.get_cmap("viridis", len(paths))
         figure = plt.figure()
         ax = figure.add_subplot()
         for path_index, path in enumerate(paths):
